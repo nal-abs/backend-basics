@@ -1,21 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import './App.scss';
 import axios from 'axios';
 import Table from './components/Table';
 
 const dataUrl = 'https://jsonplaceholder.typicode.com/todos';
 
-const api = async ({ actions }) => {
+const getData = async (setState) => {
 	const { data } = await axios.get(dataUrl);
 
-	actions.updateData(data);
+	setState(data);
 };
 const App = (context) => {
-	useEffect(() => api(context), []);
+	const [state, setState] = useState([]);
+
+	useEffect(() => getData(setState), []);
 
 	return <div className="App">
-		<Table { ...context }/>
+		<Table { ...{ ...context, data: state } }/>
 	</div>;
 };
 

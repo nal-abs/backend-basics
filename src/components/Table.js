@@ -2,8 +2,8 @@ import { keys } from '@laufire/utils/lib';
 import React from 'react';
 
 const Table = (context) => {
-	const { state: { details }} = context;
-	const headers = details.length ? keys(details[0]) : [];
+	const { data } = context;
+	const headers = data.length ? keys(data[0]) : [];
 
 	return (
 		<table>
@@ -12,7 +12,7 @@ const Table = (context) => {
 					<th key={ i }>{header}</th>)}
 				</tr>
 			</thead>
-			<tbody>{details.map((detail, i) =>
+			<tbody>{data.map((detail, i) =>
 				<tr key={ i }>
 					{headers.map((header, key) =>
 						<td key={ key }>{detail[header]}</td>)}

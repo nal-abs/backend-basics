@@ -4,20 +4,28 @@ import './App.scss';
 import axios from 'axios';
 import Table from './components/Table';
 
-const dataUrl = 'https://jsonplaceholder.typicode.com/todos';
+const dataUrl = 'https://jsonplaceholder.typicode.com/apples';
 
 const getData = async (setState) => {
-	const { data } = await axios.get(dataUrl);
+	try {
+		const { data } = await axios.get(dataUrl);
 
-	setState(data);
+		setState({ data });
+	}
+	catch (error) {
+		setState({ error });
+	}
 };
+
 const App = (context) => {
-	const [state, setState] = useState([]);
+	const [state, setState] = useState({ data: [], error: '' });
 
 	useEffect(() => getData(setState), []);
 
 	return <div className="App">
-		<Table { ...{ ...context, data: state } }/>
+		{state.error
+			? state.error.message
+			: <Table { ...{ ...context, data: state.data } }/>}
 	</div>;
 };
 

@@ -1,8 +1,11 @@
+import { peek } from '@laufire/utils/debug';
 import { keys } from '@laufire/utils/lib';
 import React from 'react';
 
 const Table = (context) => {
 	const { data } = context;
+
+	peek(data);
 	const headers = data.length ? keys(data[0]) : [];
 
 	return (
